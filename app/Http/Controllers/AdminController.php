@@ -39,6 +39,7 @@ class AdminController extends Controller
                 'title.required' => 'กรุณาใส่ชื่อบทความ',
                 'title.max' => 'ชื่อบทความต้องไม่เกิน 50 ตัวอักษร',
                 'content.required' => 'กรุณาใส่เนื้อหาบทความ',
+
             ]);
         $data = [
             'title' => $req->input('title'),
@@ -52,6 +53,7 @@ class AdminController extends Controller
         return redirect('/blog2');
     }
 
+
     public function delete($id)
     {
         DB::table('blogs')->where('id', $id)->delete();
@@ -59,4 +61,37 @@ class AdminController extends Controller
         return redirect()->route('blog2');
 
     }
+
+    // week10
+    public function change($id)
+    {
+        $blog = (DB::table("blogs")->where('id', $id)->first());
+        $data = [
+            'status' => !$blog->status
+        ];
+        DB::table('blogs')->where('id', $id)->update($data);
+        return redirect('blog2');
+
+    }
+    function edit($id){
+        $blog = DB::table("blogs")->where('id', $id)->first();
+        return view("edit", compact('blog'));
+    }
+    public function update(Request $request, $id){
+        $request->validate([
+        'title' => 'required|max:50',
+        'content' => 'required',
+    ], [
+        'title.required' => 'กรุณาใส่ชื่อบทความ',
+        'title.max' => 'ชื่อบทความต้องไม่เกิน 50 ตัวอักษร',
+        'content.required' => 'กรุณาใส่เนื้อหา',
+    ]);
+    $data = [
+        'title' => $request->input('title'),
+        'content' => $request->input('content'),
+    ];
+    DB::table("blogs")->where('id', $id)->update($data);
+    return redirect('/blog2');
+    }
+    
 }

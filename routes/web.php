@@ -64,5 +64,9 @@ Route::get('/test-db', function () {
 
 Route::get('/employee/create', [EmployeeController::class, 'create'])->name('employees.create');
 Route::post('/employee', [EmployeeController::class, 'store'])->name('employees.store');
-
 Route::get('/delete/{id}', [AdminController::class, 'delete'])->name('delete');
+
+// week10
+Route::get('/change/{id}', [AdminController::class, 'change'])->name('change');
+Route::get('/edit/{id}', [AdminController::class, 'edit'])->name('edit');
+Route::post('/update/{id}', [AdminController::class, 'update'])->name('update');

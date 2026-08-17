@@ -13,6 +13,7 @@
                         <th scope="col">ชื่อบทความ</th>
                         {{-- <th scope="col">เนื้อหาบทความ</th> --}}
                         <th scope="col">สถานะ</th>
+                        <th scope="col">แก้ไขบทความ</th>
                         <th scope="col">ลบบทความ</th>
                     </tr>
                 </thead>
@@ -27,13 +28,13 @@
                             <td class="text-start">{{ Str::limit($item->title, 20) }}</td>
                             {{-- <td class="text-start">{{ Str::limit($item->content, 150) }}</td> --}}
                             <td class="text-center">
-                                @if ($item->status == true)
-                                    <span class="btn btn-success ">เผยแพร่</span>
+                                @if ($item->status)
+                                    <a href="{{ route('change', $item->id) }}" class="btn btn-success">เผยแพร่</a>
                                 @else
-                                    <span class="btn btn-danger ">ซ่อน</span>
+                                    <a href="{{ route('change', $item->id) }}" class="btn btn-outline-danger">ฉบับร่าง</a>
                                 @endif
                             </td>
-
+                            <td><a href="{{ route('edit', $item->id) }}" class="btn btn-primary">แก้ไขบทความ</a></td>
                             <td><a href="{{ route('delete', $item->id) }}" class="btn btn-danger"
                                     onclick="return confirm('คุณต้องการลบบทความนี้ {{ $item->title }} จริงหรือไม่?')">ลบ</a>
                             </td>
